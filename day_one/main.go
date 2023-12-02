@@ -10,7 +10,7 @@ import (
 func main() {
 	i := getInput()
 	fmt.Printf("Part One answer is: %v\n", partOne(i))
-	partTwo(i)
+	fmt.Printf("Part Two answer is: %v\n", partTwo(i))
 }
 
 func getInput() []string {
@@ -31,7 +31,14 @@ func partOne(input []string) int {
 	return totalSum
 }
 
-func partTwo(input []string) {}
+func partTwo(input []string) int {
+	totalSum := 0
+	for _, val := range input {
+		a := calculateCalibrationValueWithStrings(val)
+		totalSum += a
+	}
+	return totalSum
+}
 
 func calculateCalibrationValue(i string) int {
 	f, err := findFirstNumber(i)
@@ -61,7 +68,7 @@ func findFirstNumber(input string) (int, error) {
 		return n, nil
 	}
 
-	return 0, fmt.Errorf("No first number found")
+	return 0, fmt.Errorf("no first number found")
 }
 
 func findLastNumber(input string) (int, error) {
@@ -76,5 +83,30 @@ func findLastNumber(input string) (int, error) {
 		return n, nil
 	}
 
-	return 0, fmt.Errorf("No last number found")
+	return 0, fmt.Errorf("no last number found")
+}
+
+func calculateCalibrationValueWithStrings(i string) int {
+	f, err := findFirstNumberWithStrings(i)
+	if err != nil {
+		panic(err)
+	}
+	l, err := findLastNumberWithStrings(i)
+	if err != nil {
+		panic(err)
+	}
+	fmtdAns := fmt.Sprintf("%d%d", f, l)
+	n, err := strconv.Atoi(fmtdAns)
+	if err != nil {
+		panic(err)
+	}
+	return n
+}
+
+func findFirstNumberWithStrings(input string) (int, error) {
+	return 0, nil
+}
+
+func findLastNumberWithStrings(input string) (int, error) {
+	return 0, nil
 }
