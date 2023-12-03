@@ -251,3 +251,59 @@ func TestFindFirstNumberWithStrings(t *testing.T) {
 		})
 	}
 }
+
+func TestFindLastNumberWithStrings(t *testing.T) {
+	tests := []struct {
+		testName       string
+		input          string
+		expectedOutput int
+	}{
+		{
+			testName:       "1",
+			input:          "two1nine",
+			expectedOutput: 9,
+		},
+		{
+			testName:       "2",
+			input:          "eightwothree",
+			expectedOutput: 3,
+		},
+		{
+			testName:       "3",
+			input:          "abcone2threexyz",
+			expectedOutput: 3,
+		},
+		{
+			testName:       "4",
+			input:          "xtwone3four",
+			expectedOutput: 4,
+		},
+		{
+			testName:       "5",
+			input:          "4nineeightseven2",
+			expectedOutput: 2,
+		},
+		{
+			testName:       "6",
+			input:          "zoneight234",
+			expectedOutput: 4,
+		},
+		{
+			testName:       "7",
+			input:          "7pqrstsixteen",
+			expectedOutput: 6,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.testName, func(t *testing.T) {
+			calculatedOutput, err := findLastNumberWithStrings(tt.input)
+			if err != nil {
+				t.Errorf("findLastNumberWithStrings() returned an error: %v", err)
+			}
+			if calculatedOutput != tt.expectedOutput {
+				t.Errorf("findLastNumberWithStrings() = [%v], expected [%v]", calculatedOutput, tt.expectedOutput)
+			}
+		})
+	}
+}

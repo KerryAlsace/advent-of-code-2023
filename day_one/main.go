@@ -16,7 +16,7 @@ var NumberStringsToInt = map[string]int{
 	"six":   6,
 	"seven": 7,
 	"eight": 8,
-	"nine":  8,
+	"nine":  9,
 }
 
 var NumberFirstLetters = map[string][]string{
@@ -58,7 +58,7 @@ func main() {
 }
 
 func getInput() []string {
-	b, err := ioutil.ReadFile("part_two_example_input.txt")
+	b, err := ioutil.ReadFile("input.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -141,7 +141,6 @@ func calculateCalibrationValueWithStrings(i string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	fmt.Printf("findFirstNumberWithStrings is %v\n", f)
 	l, err := findLastNumberWithStrings(i)
 	if err != nil {
 		return 0, err
@@ -182,7 +181,6 @@ func findFirstNumberWithStrings(input string) (int, error) {
 func findLastNumberWithStrings(input string) (int, error) {
 	lastIndex := len(input) - 1
 	for i := lastIndex; i >= 0; i-- {
-		fmt.Printf("i is %v\n", i)
 		fmtdChar := fmt.Sprintf("%c", input[i])
 		// First check if it is an int, and return it if so
 		n, nilIfInt := strconv.Atoi(fmtdChar)
@@ -207,26 +205,17 @@ func findLastNumberWithStrings(input string) (int, error) {
 
 func checkForNumString(input string, index int, s string) (int, error) {
 	possibleNumbers := NumberFirstLetters[s]
-	fmt.Printf("possibleNumbers: %v\n", possibleNumbers)
 	for _, numNameString := range possibleNumbers {
-		fmt.Printf("numNameString: %v\n", numNameString)
 		lenNumString := len(numNameString)
-		fmt.Printf("lenNumString: %v\n", lenNumString)
-		endIndex := lenNumString - index
-		fmt.Printf("endIndex: %v\n", endIndex)
-		inputEndIndex := endIndex + index
-		fmt.Printf("inputEndIndex: %v\n", inputEndIndex)
+		inputEndIndex := lenNumString + index
 		if inputEndIndex < index {
-			fmt.Printf("inputEndIndex %v < index %v\n", inputEndIndex, index)
 			continue
 		}
 		// Check that the input supports that last index
-		if len(input)-1 < inputEndIndex {
+		if len(input) < inputEndIndex {
 			continue
 		}
-		fmt.Printf("input[index:inputEndIndex]: input[%v:%v]\n", index, inputEndIndex)
 		wordInInput := input[index:inputEndIndex]
-		fmt.Printf("wordInInput: %v\nnumNameString: %v", wordInInput, numNameString)
 		if wordInInput == numNameString {
 			return NumberStringsToInt[wordInInput], nil
 		}
