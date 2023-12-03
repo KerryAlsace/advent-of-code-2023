@@ -29,16 +29,11 @@ func main() {
 	if err != nil {
 		fmt.Printf("Error in partOne: %v\n", err)
 	}
-	partTwoAns, err := partTwo(i)
-	if err != nil {
-		fmt.Printf("Error in partTwo: %v\n", err)
-	}
 	fmt.Printf("Part One answer is: %v\n", partOneAns)
-	fmt.Printf("Part Two answer is: %v\n", partTwoAns)
 }
 
 func getInput() []string {
-	b, err := ioutil.ReadFile("input.txt")
+	b, err := ioutil.ReadFile("part_one_example_input.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -51,11 +46,27 @@ func partOne(input []string) (int, error) {
 	if err != nil {
 		return 0, fmt.Errorf("error getting game details: %v", err)
 	}
-	return 0, fmt.Errorf("error in partOne")
+
+	possibleGameNumbersSum := 0
+	for _, game := range games {
+		possibleGameNumbersSum += possibleGameNumber(game)
+	}
+	return possibleGameNumbersSum, nil
 }
 
-func partTwo(input []string) (int, error) {
-	return 0, fmt.Errorf("error in partTwo")
+func possibleGameNumber(game Game) int {
+	isPossible := true
+	for _, set := range game.sets {
+		if set.red > RED || set.green > GREEN || set.blue > BLUE {
+			isPossible = false
+		}
+	}
+
+	if !isPossible {
+		return 0
+	}
+
+	return game.name
 }
 
 func getGameDetails(input []string) ([]Game, error) {
