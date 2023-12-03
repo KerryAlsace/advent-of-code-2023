@@ -33,7 +33,7 @@ func main() {
 }
 
 func getInput() []string {
-	b, err := ioutil.ReadFile("part_one_example_input.txt")
+	b, err := ioutil.ReadFile("input.txt")
 	if err != nil {
 		panic(err)
 	}
